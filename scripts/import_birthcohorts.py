@@ -1029,7 +1029,7 @@ if len(eucan_populations) > 0 and len(existing_population_ids) > 0:
     log.debug(
         "\nDelete existing birth cohort populations %s", len(existing_population_ids)
     )
-    eucan_session.delete_list("eucan_population A", existing_population_ids)
+    eucan_session.delete_list("eucan_population", existing_population_ids)
 
 if len(eucan_events) > 0 and len(existing_event_ids) > 0:
     log.debug("\nDelete existing birth cohort events %s", len(existing_event_ids))
