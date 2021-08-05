@@ -1,0 +1,15 @@
+id	name	description	selection_criteria	selection_criteria_supplement	recruitment_sources	recruitment_sources_supplement	number_of_participants	participants_with_biosamples	number_of_participants_supplement
+eucan:3D:partners	3D - Partners		country	country Canada					
+eucan:3D:children	3D - Children		country	country Canada					
+eucan:3D:mothers	3D - Mothers		age,country	age min 18, country Canada					
+eucan:APrON:partners	APrON - Partners		country	country Canada					
+eucan:APrON:children	APrON - Children		country	country Canada					
+eucan:APrON:mothers	APrON - Mothers		age,country	age min 16, country Canada					
+eucan:AOBF:children	AOB/F - Children		country	country Canada					
+eucan:AOBF:mothers	AOB/F - Mothers		age,country	age min 18, country Canada					
+eucan:START:childrenUI	START - Children Urban India		country	country India					
+eucan:START:childrenCA	START - Children Canada		country	country Canada					
+eucan:START:childrenRI	START - Children Rural India		country	country India					
+eucan:START:mothersUI	START - Mothers Urban India		age,country	age min 18, country India					
+eucan:START:mothersCA	START - Mothers Canada		age,country	age min 18, country Canada					
+eucan:START:mothersRI	START - Mothers Rural India		age,country	age min 18, country India					
