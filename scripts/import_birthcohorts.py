@@ -949,29 +949,42 @@ for study_id in existing_studies.keys():
             existing_studies[study_id],
         )
 if deleted == 0:
-    log.info()
+    log.info("No birth cohort studies that are deleted")
 
 eucan_person_ids = [value for person in eucan_persons for value in person.values()]
+deleted = 0
 for person_id in existing_persons.keys():
     if person_id not in eucan_person_ids:
+        deleted += 1
         print("This birth cohort person will be deleted:", existing_persons[person_id])
+if deleted == 0:
+    log.info("No birth cohort persons that are deleted")
 
 eucan_event_ids = [value for event in eucan_events for value in event.values()]
+deleted = 0
 for event_id in existing_events.keys():
     if event_id not in eucan_event_ids:
+        deleted += 1
         print(
-            "This birth cohort event does not exist anymore:", existing_events[event_id]
+            "This birth cohort data collection event does not exist anymore:",
+            existing_events[event_id],
         )
+if deleted == 0:
+    log.info("No birth cohort data collection events that are deleted")
 
 eucan_population_ids = [
     value for population in eucan_populations for value in population.values()
 ]
+deleted = 0
 for population_id in existing_populations.keys():
     if population_id not in eucan_population_ids:
+        deleted += 1
         print(
             "This birth cohort population does not exist anymore:",
             existing_populations[population_id],
         )
+if deleted == 0:
+    log.info("No birth cohort populations that are deleted")
 
 # Report any new birth cohort studies, persons, data collection events and populations
 log.info("Report any new birth cohort studies")
@@ -1016,9 +1029,9 @@ if len(eucan_populations) > 0 and len(existing_population_ids) > 0:
     log.debug(
         "\nDelete existing birth cohort populations %s", len(existing_population_ids)
     )
-    eucan_session.delete_list("eucan_population", existing_population_ids)
+    eucan_session.delete_list("eucan_population A", existing_population_ids)
 
-if len(eucan_events) > 0 and len(existing_events_ids) > 0:
+if len(eucan_events) > 0 and len(existing_event_ids) > 0:
     log.debug("\nDelete existing birth cohort events %s", len(existing_event_ids))
     eucan_session.delete_list("eucan_events", existing_event_ids)
 
