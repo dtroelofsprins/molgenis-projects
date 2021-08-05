@@ -14,7 +14,7 @@ import requests
 
 
 # Define function(s)
-# Function to get from a full name the first and last names
+# Function to derive from the birth cohort contact name the titles, first and last name
 def get_first_last_name(full_name, title_list):
     first_name = ""
     last_name = ""
