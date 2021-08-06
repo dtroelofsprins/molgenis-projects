@@ -1,2 +1,2 @@
 ## EUCAN-Connect model
-Upload the model.zip by using the import wizard with Molgenis.
+Upload the model.zip by using the import wizard within Molgenis.
