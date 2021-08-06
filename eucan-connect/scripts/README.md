@@ -1,3 +1,3 @@
 ### Scripts
 **import_birthcohorts.py:**
-With the import_birhtcohorts.py data from www.birthcohorts.net can be uploaded in the EUCAN-Connect Catalogue
+Script to import birthcohort data from www.birthcohorts.net (by using the JSON API) and add the data to the EUCAN-Connect Catalogue.
