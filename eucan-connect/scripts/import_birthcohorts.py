@@ -1,7 +1,7 @@
 """
  202011 Dieuwke Roelofs-Prins
  Script to import birthcohort data (using JSON API from birthcohorts.net)
- and add the data to the EUCAN model.
+ and add the data to the EUCAN-Connect Catalogue.
 """
 
 # Import module(s)
