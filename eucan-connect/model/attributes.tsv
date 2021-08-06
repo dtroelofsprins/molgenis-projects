@@ -13,7 +13,7 @@ country	Country		eucan_persons	xref	eucan_country	true	false	true	false		false	f
 label	label		eucan_persons	string		false	true	true	false	true	true	false	false						"{""template"":""{{first_name}} {{last_name}}""}"				false																
 id	ID		eucan_country	string		false	true	true	true		true	false	false							$('id').matches(/^[a-z]+$/i).value()			false																
 label	Label		eucan_country	string		false	false	true	false	true	false	false	true										false																
-id	ID		eucan_events	string		false	true	true	true		true	false	false							$('id').matches(/^[a-z0-9_:]+$/i).value()			true																
+id	ID		eucan_events	string		false	true	false	true		true	false	false							$('id').matches(/^[a-z0-9_:]+$/i).value()			true																
 name	Name		eucan_events	string		false	true	true	false	true	false	false	true										false																
 description	Description		eucan_events	text		true	false	true	false		false	false	false										false																
 start_end_year	Start/End Year		eucan_events	string		true	false	true	false		false	false	false										false																
@@ -35,7 +35,7 @@ id	ID		eucan_recruitment_sources	string		false	true	true	true		true	false	false	
 label	Label		eucan_recruitment_sources	string		false	false	true	false	true	false	false	true										false																
 id	ID		eucan_selection_criteria	string		false	true	true	true		true	false	false							$('id').matches(/^[a-z0-9_]+$/i).value()			false																
 label	Label		eucan_selection_criteria	string		false	false	true	false	true	false	false	true										false																
-id	ID	Unique study ID within EUCAN-connect, studyAcronym prefixed with eucan:studyID:	eucan_study	string		false	true	true	true		true	false	false							$('id').matches(/^[a-z0-9:]+$/i).value()			true																
+id	ID	Unique study ID within EUCAN-connect, studyAcronym prefixed with eucan:studyID:	eucan_study	string		false	true	false	true		true	false	false							$('id').matches(/^[a-z0-9:]+$/i).value()			true																
 study_name	Study Name		eucan_study	string		false	true	true	false	true	false	false	true										false																
 acronym	Acronym		eucan_study	string		true	false	true	false		false	false	false										false																
 objectives	Objectives		eucan_study	text		true	false	true	false		false	false	false										false																
