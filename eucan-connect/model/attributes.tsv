@@ -10,7 +10,7 @@ address	Address	Address according to MIABIS 2.0 - MIABIS-2.0-07-E.	eucan_persons
 zip	Zip		eucan_persons	string		true	false	true	false		false	false	true										false																
 city	City		eucan_persons	string		true	false	true	false		false	false	false										false																
 country	Country		eucan_persons	xref	eucan_country	true	false	true	false		false	false	false										false																
-label	label		eucan_persons	string		false	true	false	false	true	true	false	false						"{""template"":""{{first_name}} {{last_name}}""}"				false																
+label	label		eucan_persons	string		false	true	true	false	true	true	false	false						"{""template"":""{{first_name}} {{last_name}}""}"				false																
 id	ID		eucan_country	string		false	true	true	true		true	false	false							$('id').matches(/^[a-z]+$/i).value()			false																
 label	Label		eucan_country	string		false	false	true	false	true	false	false	true										false																
 id	ID		eucan_events	string		false	true	true	true		true	false	false							$('id').matches(/^[a-z0-9_:]+$/i).value()			true																
