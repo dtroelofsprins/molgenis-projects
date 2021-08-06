@@ -14,10 +14,30 @@ import requests
 
 
 # Define function(s)
+# Function to derive the e-mail address from a list
+def derive_email_address(email_list):
+    if i <= len(re.split(", |; ", email_list)):
+        email_address = re.split(", |; ", email_list)[i - 1].strip()
+    else:
+        email_address = re.split(", |; ", email_list)[
+            len(re.split(", |; ", email_list)) - 1
+        ].strip()
+    if "@" not in email_address:
+        if "at" in email_address:
+            email_address = email_address.replace("at", "@").replace(" ", "")
+        else:
+            log.warning("Email address " + email_address + " is not valid")
+            email_address = None
+    else:
+        email_address = None
+
+    return email_address
+
+
 # Function to derive from the birth cohort contact name the titles, first and last name
-def get_first_last_name(full_name, title_list):
-    first_name = ""
-    last_name = ""
+def derive_first_last_name(full_name, known_titles):
+    derived_first_name = ""
+    derived_last_name = ""
     second_first_names = [
         "Aysimi",
         "Cristina",
@@ -30,81 +50,108 @@ def get_first_last_name(full_name, title_list):
         "Peter",
         "Pia",
     ]
-    titles = []
+    person_titles = []
     if len(full_name) > 0:
-        for title in title_list:
-            if title in full_name:
-                titles.append(title)
-                full_name = full_name.replace(title, "")
+        for known_title in known_titles:
+            if known_title in full_name:
+                person_titles.append(title)
+                full_name = full_name.replace(known_title, "")
         full_name = full_name.replace(",", "")
         full_name = full_name.strip()
         if full_name == "":
-            first_name = "Unknown"
-            last_name = "Unknown"
+            derived_first_name = "Unknown"
+            derived_last_name = "Unknown"
         else:
             if len(full_name.split(" ")) > 1:
                 if full_name.split(" ")[1] in second_first_names:
-                    first_name = full_name.split(" ")[0] + " " + full_name.split(" ")[1]
+                    derived_first_name = (
+                        full_name.split(" ")[0] + " " + full_name.split(" ")[1]
+                    )
                 else:
-                    first_name = full_name.split(" ")[0]
-                last_name = full_name.replace(first_name, "")
+                    derived_first_name = full_name.split(" ")[0]
+                derived_last_name = full_name.replace(derived_first_name, "")
                 # Check for abbreviations
-                while last_name.find(".") != -1:
-                    if first_name != "":
-                        first_name = (
-                            first_name
+                while derived_last_name.find(".") != -1:
+                    if derived_first_name != "":
+                        derived_first_name = (
+                            derived_first_name
                             + " "
-                            + last_name[
-                                last_name.find(".") - 1 : last_name.find(".") + 1
+                            + derived_last_name[
+                                derived_last_name.find(".")
+                                - 1 : derived_last_name.find(".")
+                                + 1
                             ]
                         )
                     else:
-                        first_name = last_name[
-                            last_name.find(".") - 1 : last_name.find(".") + 1
+                        derived_first_name = derived_last_name[
+                            derived_last_name.find(".")
+                            - 1 : derived_last_name.find(".")
+                            + 1
                         ]
-                    last_name = last_name.replace(
-                        last_name[last_name.find(".") - 1 : last_name.find(".") + 1], ""
+                    derived_last_name = derived_last_name.replace(
+                        derived_last_name[
+                            derived_last_name.find(".")
+                            - 1 : derived_last_name.find(".")
+                            + 1
+                        ],
+                        "",
                     )
                 # Check for parenthesis
-                if "(" in last_name:
-                    if first_name != "":
-                        first_name = (
-                            first_name
+                if "(" in derived_last_name:
+                    if derived_first_name != "":
+                        derived_first_name = (
+                            derived_first_name
                             + " "
-                            + last_name[last_name.find("(") : last_name.find(")") + 1]
+                            + derived_last_name[
+                                derived_last_name.find("(") : derived_last_name.find(
+                                    ")"
+                                )
+                                + 1
+                            ]
                         )
                     else:
-                        first_name = last_name[
-                            last_name.find("(") : last_name.find(")") + 1
+                        derived_first_name = derived_last_name[
+                            derived_last_name.find("(") : derived_last_name.find(")")
+                            + 1
                         ]
-                    last_name = last_name.replace(
-                        last_name[last_name.find("(") : last_name.find(")") + 1], ""
+                    derived_last_name = derived_last_name.replace(
+                        derived_last_name[
+                            derived_last_name.find("(") : derived_last_name.find(")")
+                            + 1
+                        ],
+                        "",
                     )
             else:
-                first_name = "Unknown"
-                last_name = full_name.strip()
-                if last_name.find("."):
+                derived_first_name = "Unknown"
+                derived_last_name = full_name.strip()
+                if derived_last_name.find("."):
                     # Check for abbreviations
-                    while last_name.find(".") != -1:
-                        if first_name != "Unknown":
-                            first_name = (
-                                first_name
+                    while derived_last_name.find(".") != -1:
+                        if derived_first_name != "Unknown":
+                            derived_first_name = (
+                                derived_first_name
                                 + " "
-                                + last_name[
-                                    last_name.find(".") - 1 : last_name.find(".") + 1
+                                + derived_last_name[
+                                    derived_last_name.find(".")
+                                    - 1 : derived_last_name.find(".")
+                                    + 1
                                 ]
                             )
                         else:
-                            first_name = last_name[
-                                last_name.find(".") - 1 : last_name.find(".") + 1
+                            derived_first_name = derived_last_name[
+                                derived_last_name.find(".")
+                                - 1 : derived_last_name.find(".")
+                                + 1
                             ]
-                        last_name = last_name.replace(
-                            last_name[
-                                last_name.find(".") - 1 : last_name.find(".") + 1
+                        derived_last_name = derived_last_name.replace(
+                            derived_last_name[
+                                derived_last_name.find(".")
+                                - 1 : derived_last_name.find(".")
+                                + 1
                             ],
                             "",
                         )
-    return titles, first_name.strip(), last_name.strip()
+    return titles, derived_first_name.strip(), derived_last_name.strip()
 
 
 parser = argparse.ArgumentParser()
@@ -444,7 +491,7 @@ while pageNr < int(ApiCount) + call_limit:
                     ):
                         contact_name = contact_name.strip()
                         if len(contact_name) > 0:
-                            titles, first_name, last_name = get_first_last_name(
+                            titles, first_name, last_name = derive_first_last_name(
                                 contact_name, title_list
                             )
                             log.debug(
@@ -498,26 +545,7 @@ while pageNr < int(ApiCount) + call_limit:
                                 .replace("Å", "A")
                             )  # random_string(n_chars=10)
                             if contact_emails is not None:
-                                if i <= len(re.split(", |; ", contact_emails)):
-                                    contact_email = re.split(", |; ", contact_emails)[
-                                        i - 1
-                                    ].strip()
-                                else:
-                                    contact_email = re.split(", |; ", contact_emails)[
-                                        len(re.split(", |; ", contact_emails)) - 1
-                                    ].strip()
-                                if "@" not in contact_email:
-                                    if "at" in contact_email:
-                                        contact_email = contact_email.replace(
-                                            "at", "@"
-                                        ).replace(" ", "")
-                                    else:
-                                        log.warning(
-                                            "Email address "
-                                            + contact_email
-                                            + " is not valid"
-                                        )
-                                        contact_email = None
+                                contact_email = derive_email_address(contact_emails)
                             else:
                                 contact_email = None
                             if contact_id not in contactIDs:
@@ -550,7 +578,7 @@ while pageNr < int(ApiCount) + call_limit:
                         contact_name.replace("co-PI:", "").replace("PI:", "").strip()
                     )
                     if len(contact_name) > 0:
-                        titles, first_name, last_name = get_first_last_name(
+                        titles, first_name, last_name = derive_first_last_name(
                             contact_name, title_list
                         )
                         log.debug(
@@ -602,31 +630,11 @@ while pageNr < int(ApiCount) + call_limit:
                                 .replace("š", "s")
                                 .replace("Å", "A")
                             )  # random_string(n_chars=10)
+                            contact_email = None
                             if investigator_emails is not None:
-                                if i <= len(re.split(", |; ", investigator_emails)):
-                                    contact_email = re.split(
-                                        ", |; ", investigator_emails
-                                    )[i - 1].strip()
-                                else:
-                                    contact_email = re.split(
-                                        ", |; ", investigator_emails
-                                    )[
-                                        len(re.split(", |; ", investigator_emails)) - 1
-                                    ].strip()
-                                if "@" not in contact_email:
-                                    if "at" in contact_email:
-                                        contact_email = contact_email.replace(
-                                            "at", "@"
-                                        ).replace(" ", "")
-                                    else:
-                                        log.warning(
-                                            "Email address "
-                                            + contact_email
-                                            + " is not valid"
-                                        )
-                                        contact_email = None
-                            else:
-                                contact_email = None
+                                contact_email = derive_email_address(
+                                    investigator_emails
+                                )
                             if contact_id not in investigatorIDs:
                                 investigatorIDs.append(contact_id)
                             # Check if the person is already in eucan_contacts otherwise add it
