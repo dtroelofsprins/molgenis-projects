@@ -263,7 +263,9 @@ for country in countries:
     countryIDs[country["label"]] = country["id"]
 
 # Get the current list with persons/contacts from EUCAN
-persons = eucan_session.get("eucan_persons", q='id=like="birthcohort"', batch_size=1000)
+persons = eucan_session.get(
+    "eucan_persons", q='id=like="birthcohorts"', batch_size=1000
+)
 
 if len(persons) == 0:
     # raise SystemExit('No persons found?!?')
@@ -277,7 +279,7 @@ for person in persons:
 # Get the current list of birth cohort studies from EUCAN
 studies = eucan_session.get(
     "eucan_study",
-    q='source_catalogue=like="https://www.birthcohorts.net/birthcohort"',
+    q='id=like="birthcohorts"',
     batch_size=1000,
 )
 
@@ -291,7 +293,7 @@ for study in studies:
     existing_studies[study["id"]] = study
 
 # Get the current list of events from EUCAN
-events = eucan_session.get("eucan_events", q='id=like="birthcohort"', batch_size=1000)
+events = eucan_session.get("eucan_events", q='id=like="birthcohorts"', batch_size=1000)
 
 if len(events) == 0:
     # raise SystemExit('No data events found?!?')
@@ -304,7 +306,7 @@ for event in events:
 
 # Get the current list of populations from EUCAN
 populations = eucan_session.get(
-    "eucan_population", attributes="id", q='id=like="birthcohort"', batch_size=1000
+    "eucan_population", attributes="id", q='id=like="birthcohorts"', batch_size=1000
 )
 
 if len(populations) == 0:
