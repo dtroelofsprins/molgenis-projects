@@ -50,11 +50,11 @@ def derive_first_last_name(full_name, known_titles):
         "Peter",
         "Pia",
     ]
-    person_titles = []
+    derived_titles = []
     if len(full_name) > 0:
         for known_title in known_titles:
             if known_title in full_name:
-                person_titles.append(title)
+                derived_titles.append(known_title)
                 full_name = full_name.replace(known_title, "")
         full_name = full_name.replace(",", "")
         full_name = full_name.strip()
@@ -151,7 +151,7 @@ def derive_first_last_name(full_name, known_titles):
                             ],
                             "",
                         )
-    return titles, derived_first_name.strip(), derived_last_name.strip()
+    return derived_titles, derived_first_name.strip(), derived_last_name.strip()
 
 
 parser = argparse.ArgumentParser()
